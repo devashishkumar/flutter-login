@@ -1,7 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:device_info/device_info.dart';
+
 
 void main() {
   runApp(MyApp());
+}
+
+void _getId() async {
+  var deviceInfo = DeviceInfoPlugin();
+  var androidDeviceInfo = await deviceInfo.androidInfo;
+  print(androidDeviceInfo.androidId); // unique ID on Android
+  // if (Platform.isIOS) { // import 'dart:io'
+  //   var iosDeviceInfo = await deviceInfo.iosInfo;
+  //   return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+  // } else {
+  //   var androidDeviceInfo = await deviceInfo.androidInfo;
+  //   return androidDeviceInfo.androidId; // unique ID on Android
+  // }
+}
+
+void deviceId() async {
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+  print('Running on ${androidInfo.model}');  // e.g. "Moto G (4)"
+
+  IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+  print('Running on ${iosInfo.utsname.machine}');
 }
 
 class MyApp extends StatelessWidget {
@@ -68,6 +92,7 @@ class _LoginDemoState extends State<LoginDemo> {
             TextButton(
               onPressed: (){
                 //TODO FORGOT PASSWORD SCREEN GOES HERE
+                _getId();
               },
               child: Text(
                 'Forgot Password',
@@ -79,7 +104,7 @@ class _LoginDemoState extends State<LoginDemo> {
               width: 250,
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
 
                 },
